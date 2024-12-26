@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trova l'oggetto smarrito</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.5s, color 0.5s;
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1 id="question">Caricamento...</h1>
+    <button onclick="changeQuestion()">Dammi un altro consiglio</button>
+
+    <script>
+        const questions = [
+            "Qual è l'oggetto che hai perso?",
+            "Quando è stata l'ultima volta che l'hai visto?",
+            "Dove pensi di averlo usato per l'ultima volta?",
+            "Hai un'idea di quando lo hai perso?",
+            "Potrebbe essere stato spostato da qualcun altro?",
+            "È un oggetto che tieni solitamente in un posto specifico?",
+            "L'hai usato recentemente?",
+            "Potrebbe essere caduto o nascosto sotto qualcosa?",
+            "Hai controllato nei posti in cui di solito lo riponi?",
+            "L'oggetto è di dimensioni grandi o piccole?",
+            // Aggiungi altre domande qui...
+        ];
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function changeQuestion() {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const question = questions[randomIndex];
+            const bgColor = getRandomColor();
+
+            document.body.style.backgroundColor = bgColor;
+            document.body.style.color = getContrastColor(bgColor);
+            document.getElementById('question').innerText = question;
+        }
+
+        function getContrastColor(hex) {
+            const r = parseInt(hex.substr(1, 2), 16);
+            const g = parseInt(hex.substr(3, 2), 16);
+            const b = parseInt(hex.substr(5, 2), 16);
+            const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+            return yiq >= 128 ? '#000000' : '#FFFFFF';
+        }
+
+        // Cambia la domanda all'avvio della pagina
+        window.onload = changeQuestion;
+    </script>
+</body>
+</html>
