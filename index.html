@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trova l'oggetto smarrito</title>
+    <title>Consigli per Ritrovare Oggetti</title>
     <style>
         body {
             display: flex;
@@ -30,11 +30,18 @@
         button:hover {
             background-color: rgba(0, 0, 0, 0.1);
         }
+        footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8em;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <h1 id="question">Caricamento...</h1>
     <button onclick="changeQuestion()">Dammi un altro consiglio</button>
+    <footer>Created by Giulioni Family with Chat GPT</footer>
     <script>
         const questions = [
               "Qual è l'oggetto che hai perso?",
