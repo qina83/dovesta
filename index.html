@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consigli per Ritrovare Oggetti</title>
+    <title>Trova l'oggetto smarrito</title>
     <style>
         body {
             display: flex;
@@ -12,38 +12,29 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif;
-            text-align: center;
             transition: background-color 0.5s, color 0.5s;
+            text-align: center;
         }
-        #question {
+        h1 {
             font-size: 1.5em;
             margin: 20px;
         }
         button {
             padding: 10px 20px;
             font-size: 1em;
-            background-color: #fff;
-            border: 2px solid #000;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
         }
         button:hover {
-            background-color: #000;
-            color: #fff;
-        }
-        footer {
-            position: absolute;
-            bottom: 10px;
-            font-size: 0.8em;
-            color: #666;
+            background-color: rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <div id="question"></div>
-    <button onclick="getNewQuestion()">Dammi un altro consiglio</button>
-    <footer>Created by Giulioni Family with Chat GPT</footer>
+    <h1 id="question">Caricamento...</h1>
+    <button onclick="changeQuestion()">Dammi un altro consiglio</button>
     <script>
         const questions = [
               "Qual è l'oggetto che hai perso?",
@@ -275,8 +266,7 @@
     "Potrebbe essere stato messo nella scatola dei regali ricevuti?",
     "Hai guardato nella tua valigia da viaggio recente?",
     "Potrebbe essere nascosto tra i tuoi elettrodomestici in cucina?"
- ];
-
+];
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';
@@ -285,19 +275,23 @@
             }
             return color;
         }
-
-        function getNewQuestion() {
+        function changeQuestion() {
             const randomIndex = Math.floor(Math.random() * questions.length);
-            const newBackgroundColor = getRandomColor();
-            const newTextColor = getRandomColor();
-
-            document.body.style.backgroundColor = newBackgroundColor;
-            document.body.style.color = newTextColor;
-            document.getElementById('question').textContent = questions[randomIndex];
+            const question = questions[randomIndex];
+            const bgColor = getRandomColor();
+            document.body.style.backgroundColor = bgColor;
+            document.body.style.color = getContrastColor(bgColor);
+            document.getElementById('question').innerText = question;
         }
-
-        // Mostra una domanda casuale all'avvio
-        getNewQuestion();
+        function getContrastColor(hex) {
+            const r = parseInt(hex.substr(1, 2), 16);
+            const g = parseInt(hex.substr(3, 2), 16);
+            const b = parseInt(hex.substr(5, 2), 16);
+            const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+            return yiq >= 128 ? '#000000' : '#FFFFFF';
+        }
+        // Cambia la domanda all'avvio della pagina
+        window.onload = changeQuestion;
     </script>
 </body>
 </html>
