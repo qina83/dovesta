@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trova l'oggetto smarrito</title>
+    <title>Consigli per Ritrovare Oggetti</title>
     <style>
         body {
             display: flex;
@@ -12,44 +12,270 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            transition: background-color 0.5s, color 0.5s;
+            font-family: Arial, sans-serif;
             text-align: center;
+            transition: background-color 0.5s, color 0.5s;
         }
-        h1 {
+        #question {
             font-size: 1.5em;
             margin: 20px;
         }
         button {
             padding: 10px 20px;
             font-size: 1em;
-            border: none;
+            background-color: #fff;
+            border: 2px solid #000;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
         }
         button:hover {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: #000;
+            color: #fff;
+        }
+        footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8em;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <h1 id="question">Caricamento...</h1>
-    <button onclick="changeQuestion()">Dammi un altro consiglio</button>
-
+    <div id="question"></div>
+    <button onclick="getNewQuestion()">Dammi un altro consiglio</button>
+    <footer>Created by Giulioni Family with Chat GPT</footer>
     <script>
         const questions = [
-            "Qual è l'oggetto che hai perso?",
-            "Quando è stata l'ultima volta che l'hai visto?",
-            "Dove pensi di averlo usato per l'ultima volta?",
-            "Hai un'idea di quando lo hai perso?",
-            "Potrebbe essere stato spostato da qualcun altro?",
-            "È un oggetto che tieni solitamente in un posto specifico?",
-            "L'hai usato recentemente?",
-            "Potrebbe essere caduto o nascosto sotto qualcosa?",
-            "Hai controllato nei posti in cui di solito lo riponi?",
-            "L'oggetto è di dimensioni grandi o piccole?",
-            // Aggiungi altre domande qui...
-        ];
+              "Qual è l'oggetto che hai perso?",
+    "Quando è stata l'ultima volta che l'hai visto?",
+    "Dove pensi di averlo usato per l'ultima volta?",
+    "Hai un'idea di quando lo hai perso?",
+    "Potrebbe essere stato spostato da qualcun altro?",
+    "È un oggetto che tieni solitamente in un posto specifico?",
+    "L'hai usato recentemente?",
+    "Potrebbe essere caduto o nascosto sotto qualcosa?",
+    "Hai controllato nei posti in cui di solito lo riponi?",
+    "L'oggetto è di dimensioni grandi o piccole?",
+    "Hai spostato qualcosa di recente in casa?",
+    "Hai riordinato o pulito in casa ultimamente?",
+    "Hai fatto qualche attività particolare quando hai perso l'oggetto?",
+    "Lo avevi con te mentre cambiavi stanza?",
+    "Ti ricordi se l'avevi in mano mentre facevi altro?",
+    "Lo avevi con te mentre parlavi al telefono?",
+    "Hai guardato nei posti in cui ti siedi di solito?",
+    "Potrebbe essere finito in tasca o in una borsa?",
+    "L’hai appoggiato su una superficie instabile?",
+    "Potrebbe essere scivolato dietro o sotto un mobile?",
+    "Qualcuno in casa potrebbe averlo spostato per errore?",
+    "Hai chiesto ai bambini o ai coinquilini se l’hanno visto?",
+    "Potrebbe essere stato preso da un animale domestico?",
+    "Hai controllato i luoghi dove gli animali si rifugiano o giocano?",
+    "Hai spiegato bene com'è fatto l'oggetto alle persone con cui vivi?",
+    "Qualcuno ha riordinato o spostato qualcosa senza dirtelo?",
+    "Qualcuno potrebbe averlo preso in prestito senza avvisarti?",
+    "Hai controllato sotto i cuscini del divano?",
+    "Potrebbe essere finito in una scatola o un cassetto per errore?",
+    "Hai guardato tra i vestiti che hai indossato di recente?",
+    "Potrebbe essere caduto in una borsa o uno zaino?",
+    "L’hai appoggiato su uno scaffale alto o basso?",
+    "Potrebbe essere caduto dietro il letto o un armadio?",
+    "Potrebbe essere finito in lavatrice o asciugatrice?",
+    "Hai controllato nella spazzatura o nel cestino?",
+    "Potrebbe essere in bagno, anche se non è un luogo abituale?",
+    "Hai guardato nella cucina o vicino agli elettrodomestici?",
+    "Dove metti di solito oggetti simili?",
+    "Hai l’abitudine di lasciare le cose in un determinato posto?",
+    "Tendi a lasciare oggetti in tasca o sopra i mobili?",
+    "Sei sicuro di non averlo spostato inconsciamente?",
+    "Lo tieni sempre nello stesso posto o lo sposti spesso?",
+    "Quando usi l’oggetto, lo metti via subito o lo lasci in giro?",
+    "Hai l'abitudine di posare le cose in posti insoliti?",
+    "Ti capita di dimenticare le cose in stanze meno frequentate?",
+    "Lo porti con te in altre stanze senza pensarci?",
+    "L'oggetto ha un colore o una forma che lo rende più difficile da trovare?",
+    "È piccolo abbastanza da potersi infilare in spazi stretti?",
+    "Potrebbe essere nascosto dietro un altro oggetto simile?",
+    "È possibile che sia caduto per terra senza che te ne accorgessi?",
+    "Hai guardato nei posti in cui non pensi mai di cercare?",
+    "Potrebbe essere coperto da un panno o un libro?",
+    "È un oggetto che potrebbe essere scambiato per un altro?",
+    "Potrebbe essere stato riposto per errore in un armadio?",
+    "Hai controllato tra le cose dei tuoi coinquilini o familiari?",
+    "Potrebbe essere finito in un luogo dove solitamente non entri?",
+    "Hai guardato nelle tasche dei vestiti che hai indossato ieri?",
+    "Hai controllato nei luoghi in cui ti rilassi, come il letto o il divano?",
+    "Potrebbe essere stato trascinato via da un bambino o un animale?",
+    "Lo usavi mentre facevi qualcosa di insolito?",
+    "Lo avevi con te mentre preparavi il cibo?",
+    "Potrebbe essere caduto mentre camminavi da una stanza all'altra?",
+    "Potrebbe essere nascosto tra i cuscini del divano?",
+    "Lo avevi con te quando hai ricevuto una visita?",
+    "Potrebbe essere scivolato tra i sedili dell'auto?",
+    "Hai controllato nei cassetti o negli scaffali più alti o bassi?",
+    "Lo avevi con te mentre mettevi via la spesa?",
+    "Potrebbe essere stato riposto con altri oggetti simili?",
+    "Hai controllato le tasche dei giubbotti o dei pantaloni nell'armadio?",
+    "Lo avevi con te mentre portavi fuori il cane?",
+    "Hai controllato nel garage o in cantina?",
+    "L’oggetto potrebbe essere stato scambiato per qualcosa di simile?",
+    "Potrebbe essere in un luogo dove hai appoggiato le chiavi?",
+    "Qual è l'ultimo ricordo preciso che hai dell'oggetto?",
+    "Potrebbe essere rimasto in un posto insolito mentre facevi altro?",
+    "Hai verificato nei cassetti in cui metti oggetti temporanei?",
+    "Hai pensato di controllare sotto il letto o il divano?",
+    "Qualcuno potrebbe avertelo spostato mentre riordinava?",
+               "Hai guardato nel cestino della carta?",
+    "Hai controllato dentro i sacchetti della spesa?",
+    "Potrebbe essere rimasto sul pavimento vicino alla porta?",
+    "Hai verificato nelle tasche di tutti i tuoi pantaloni?",
+    "Qualcuno potrebbe averlo portato fuori casa?",
+    "L’oggetto potrebbe essere finito vicino a un elettrodomestico?",
+    "Hai controllato nei luoghi meno frequentati della casa?",
+    "Potrebbe essere nascosto dietro libri o documenti?",
+    "Hai verificato sopra i mobili più alti?",
+    "Potrebbe essere sotto una pila di fogli o di giornali?",
+    "L’hai cercato nei posti in cui riponi le cose temporaneamente?",
+    "Hai guardato nelle scatole che usi raramente?",
+    "Potrebbe essere vicino a una finestra o un davanzale?",
+    "Hai verificato nei cassetti dei comodini?",
+    "Hai guardato nella borsa o nello zaino di qualcun altro?",
+    "Potrebbe essere nel cassetto delle posate o degli utensili?",
+    "Hai guardato dentro i contenitori che usi per i piccoli oggetti?",
+    "Hai controllato nella lavastoviglie o nel lavello?",
+    "Hai verificato sotto i tappeti?",
+    "Potrebbe essere finito nella cuccia del tuo animale domestico?",
+    "L’hai cercato vicino a dove tieni il cellulare o il caricabatterie?",
+    "Hai controllato sopra le mensole dove lasci spesso piccoli oggetti?",
+    "Potrebbe essere caduto sotto il tappetino del bagno?",
+    "Hai guardato nei cassetti della scrivania?",
+    "Potrebbe essere nella tua borsa per il lavoro o la scuola?",
+    "L’hai verificato negli armadi che apri raramente?",
+    "Hai controllato nella cesta dei panni sporchi?",
+    "Potrebbe essere stato riposto con la biancheria pulita?",
+    "Hai verificato nei ripiani alti della cucina?",
+    "Potrebbe essere stato spostato nel tuo comodino?",
+    "Hai guardato nei cassetti in cui metti le medicine?",
+    "Potrebbe essere rimasto nella tua tasca mentre eri distratto?",
+    "Hai verificato vicino alla televisione o al telecomando?",
+    "Hai controllato sul tavolo dove mangi?",
+    "Potrebbe essere rimasto vicino a uno specchio?",
+    "Hai guardato vicino agli attrezzi da lavoro?",
+    "Potrebbe essere finito nella tua valigia o borsa da viaggio?",
+    "Hai verificato negli angoli delle stanze meno usate?",
+    "Potrebbe essere stato messo dentro una scatola per errore?",
+    "Hai controllato sopra o sotto il frigorifero?",
+    "L’oggetto potrebbe essere caduto vicino alla lavatrice?",
+    "Hai guardato tra le lenzuola o le coperte del letto?",
+    "Potrebbe essere stato spostato durante un trasloco o riordino?",
+    "Hai controllato nella borsa di qualcun altro in casa?",
+    "Potrebbe essere caduto dietro un elettrodomestico?",
+    "Hai verificato se è vicino al tuo computer o laptop?",
+    "Hai guardato nelle tasche delle giacche appese?",
+    "Potrebbe essere rimasto sul davanzale di una finestra?",
+    "Hai controllato nei luoghi dove tieni i ricordi o souvenir?",
+    "L’hai cercato vicino al tavolino del soggiorno?",
+    "Potrebbe essere vicino alla tua macchina del caffè?",
+    "Hai verificato nel cassetto delle cose da riparare?",
+    "Potrebbe essere stato scambiato con un altro oggetto simile?",
+    "Hai guardato nei cassetti dei tuoi figli o familiari?",
+    "Potrebbe essere finito nei cassetti della cucina non usati spesso?",
+    "Hai controllato sotto le sedie o i tavoli?",
+    "Potrebbe essere stato nascosto dietro una tenda?",
+    "Hai verificato nei luoghi dove metti gli oggetti smarriti?",
+    "L’oggetto potrebbe essere stato portato via accidentalmente?",
+    "Hai chiesto a tutti in casa di aiutarti a cercarlo?",
+    "Potrebbe essere rimasto vicino a un libro o un quaderno?",
+    "Hai controllato nei cassetti degli utensili?",
+    "Potrebbe essere stato riposto vicino a un vaso o una pianta?",
+    "L’oggetto potrebbe essere rimasto nella tua auto?",
+    "Hai guardato vicino al tuo letto o comodino?",
+    "Potrebbe essere stato scambiato per un oggetto simile?",
+    "Hai verificato nel portagioie o tra i tuoi accessori personali?",
+    "Potrebbe essere finito nella stanza degli ospiti?",
+    "Hai cercato sotto il tappeto del soggiorno?",
+    "Potrebbe essere stato appoggiato sopra un elettrodomestico?",
+    "Hai controllato se è stato nascosto per gioco da un bambino?",
+    "Potrebbe essere rimasto nella tua borsa della palestra?",
+    "Hai verificato tra le tue borse più grandi o valigie?",
+    "L’hai cercato nei cassetti dell’ufficio?",
+    "Potrebbe essere stato messo via con i tuoi documenti?",
+    "Hai guardato nel vano portaoggetti della tua auto?",
+    "Hai controllato vicino agli interruttori della luce?",
+    "Potrebbe essere nascosto dietro una cornice o un quadro?",
+    "Hai verificato vicino al tuo stereo o alla console di gioco?",
+    "Hai guardato nella cesta dei giochi dei tuoi bambini?",
+    "L’hai cercato vicino alla porta d’ingresso?",
+    "Potrebbe essere rimasto nella tasca di un cappotto appeso?",
+               "Hai controllato dietro al televisore?",
+    "Potrebbe essere finito nella tua borsa per la spesa?",
+    "Hai guardato nel contenitore delle scarpe?",
+    "Potrebbe essere nascosto sotto un mobile basso?",
+    "Hai verificato dietro la porta della stanza?",
+    "L’hai cercato vicino ai tuoi strumenti musicali, se ne hai?",
+    "Potrebbe essere stato spostato vicino al camino o alla stufa?",
+    "Hai controllato se è stato inserito in un cassetto sbagliato?",
+    "Potrebbe essere nella tua libreria, magari tra i libri?",
+    "Hai guardato nei luoghi dove lasci i tuoi accessori tecnologici?",
+    "Potrebbe essere nella cassetta degli attrezzi?",
+    "Hai verificato tra le coperte piegate o ammucchiate?",
+    "Potrebbe essere stato riposto nella scatola degli addobbi?",
+    "Hai controllato vicino alla scarpiera?",
+    "L’oggetto potrebbe essere nella tasca di un vecchio cappotto?",
+    "Potrebbe essere stato confuso con un oggetto simile nel tuo ufficio?",
+    "Hai guardato dentro i mobili della sala da pranzo?",
+    "Potrebbe essere rimasto accanto al telefono fisso o al cordless?",
+    "Hai verificato nei tuoi album di foto o diari?",
+    "Potrebbe essere finito nel borsone delle vacanze?",
+    "Hai controllato nel mobiletto del bagno?",
+    "Potrebbe essere stato appeso a un gancio che usi raramente?",
+    "Hai guardato vicino al cestino delle riviste?",
+    "L’hai cercato vicino alla lavagna o al calendario di casa?",
+    "Potrebbe essere rimasto sulla scrivania di un’altra persona?",
+    "Hai controllato nei posti in cui tieni gli oggetti di valore?",
+    "Potrebbe essere stato nascosto per sicurezza e poi dimenticato?",
+    "Hai verificato nella tasca di uno zaino che non usi spesso?",
+    "Potrebbe essere nella tua borsa per il trucco o per l'igiene?",
+    "Hai guardato sopra o dentro l’armadio della biancheria?",
+    "Potrebbe essere rimasto vicino a una lampada o un lume?",
+    "Hai controllato dentro una scatola di scarpe?",
+    "Potrebbe essere finito nel tuo cestino per gli hobby o il cucito?",
+    "Hai verificato dietro il mobile del bagno?",
+    "Potrebbe essere rimasto sul tavolino della terrazza o del balcone?",
+    "Hai guardato vicino alle finestre dove lasci piccoli oggetti?",
+    "Potrebbe essere stato dimenticato sul sedile della bicicletta?",
+    "Hai controllato nella tua borsa da lavoro?",
+    "Potrebbe essere stato nascosto nel cassetto degli snack?",
+    "Hai verificato dentro i contenitori delle decorazioni stagionali?",
+    "Potrebbe essere vicino al caricabatterie del tuo cellulare?",
+    "Hai guardato vicino al router o ai dispositivi Wi-Fi?",
+    "L’hai cercato nel garage vicino agli attrezzi?",
+    "Potrebbe essere stato lasciato sul tavolino all’ingresso?",
+    "Hai controllato dentro il portafoglio o il portamonete?",
+    "Potrebbe essere rimasto nella tua giacca da pioggia?",
+    "Hai verificato dietro lo specchio del bagno?",
+    "Potrebbe essere nascosto tra i tuoi prodotti di bellezza?",
+    "Hai guardato nelle tasche laterali di tutte le borse che usi?",
+    "Potrebbe essere stato lasciato vicino al computer o tablet?",
+    "Hai controllato tra le cose che stavi per buttare?",
+    "L’hai cercato vicino al tuo forno o al microonde?",
+    "Potrebbe essere finito in una scatola di souvenir o ricordi?",
+    "Hai verificato nei cassetti in cui metti i documenti?",
+    "Potrebbe essere rimasto sopra il frigorifero?",
+    "Hai guardato nei luoghi in cui metti gli strumenti da cucina?",
+    "Potrebbe essere caduto dietro la lavatrice?",
+    "Hai verificato se è rimasto vicino a una presa di corrente?",
+    "Potrebbe essere stato lasciato nel giardino o cortile?",
+    "Hai controllato vicino alla tua borsa da palestra?",
+    "Potrebbe essere stato spostato da qualcuno e dimenticato lì?",
+    "Hai guardato dentro i tuoi contenitori per piccoli oggetti?",
+    "Potrebbe essere stato appeso a un gancio nella tua stanza?",
+    "Hai controllato sotto i mobili più grandi come armadi o tavoli?",
+    "Potrebbe essere finito sotto il letto nella parte meno accessibile?",
+    "Hai verificato vicino a dove riponi i tuoi giochi da tavolo?",
+    "Potrebbe essere stato messo nella scatola dei regali ricevuti?",
+    "Hai guardato nella tua valigia da viaggio recente?",
+    "Potrebbe essere nascosto tra i tuoi elettrodomestici in cucina?"
+ ];
 
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
@@ -60,26 +286,18 @@
             return color;
         }
 
-        function changeQuestion() {
+        function getNewQuestion() {
             const randomIndex = Math.floor(Math.random() * questions.length);
-            const question = questions[randomIndex];
-            const bgColor = getRandomColor();
+            const newBackgroundColor = getRandomColor();
+            const newTextColor = getRandomColor();
 
-            document.body.style.backgroundColor = bgColor;
-            document.body.style.color = getContrastColor(bgColor);
-            document.getElementById('question').innerText = question;
+            document.body.style.backgroundColor = newBackgroundColor;
+            document.body.style.color = newTextColor;
+            document.getElementById('question').textContent = questions[randomIndex];
         }
 
-        function getContrastColor(hex) {
-            const r = parseInt(hex.substr(1, 2), 16);
-            const g = parseInt(hex.substr(3, 2), 16);
-            const b = parseInt(hex.substr(5, 2), 16);
-            const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-            return yiq >= 128 ? '#000000' : '#FFFFFF';
-        }
-
-        // Cambia la domanda all'avvio della pagina
-        window.onload = changeQuestion;
+        // Mostra una domanda casuale all'avvio
+        getNewQuestion();
     </script>
 </body>
 </html>
