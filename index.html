@@ -40,6 +40,7 @@
 </head>
 <body>
     <h1 id="question">Caricamento...</h1>
+    <button onclick="createGoogleSearchQuery()">Voglio saperne di piu'</button>
     <button onclick="changeQuestion()">Non ho ancora fatto</button>
     <footer>Created by Giulioni Family with Chat GPT</footer>
     <script>
@@ -244,6 +245,16 @@
             const b = parseInt(hex.substr(5, 2), 16);
             const yiq = (r * 299 + g * 587 + b * 114) / 1000;
             return yiq >= 128 ? '#000000' : '#FFFFFF';
+        }
+        function createGoogleSearchQuery() {
+            var query = document.getElementById('question').innerText;
+          // Rimuove gli spazi extra e codifica la stringa per il URL
+          const searchQuery = encodeURIComponent(query.trim());
+  
+          // Crea l'URL con il parametro di ricerca
+          const googleSearchURL = `https://www.google.com/search?q=${searchQuery}`;
+  
+           window.open(googleSearchURL, '_blank');
         }
         // Cambia la domanda all'avvio della pagina
         window.onload = changeQuestion;
